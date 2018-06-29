@@ -62,6 +62,9 @@ class NSOConnection(object):
         try:
             response.raise_for_status()
             return response.json()
+        except ValueError:
+            logger.warning('Empty/Non valid JSON response')
+            return
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
             message = _format_error_message(response)
@@ -85,43 +88,63 @@ class NSOConnection(object):
 
     def post(self, resource_type, media_type, data,
              path=None, params=None):
+
+        headers = self._get_headers(media_type)
+        headers['Content-Type'] = 'application/vnd.yang.data+json'
+
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.post(
             url,
             verify=self.verify_ssl,
-            headers=self._get_headers(media_type),
+            headers=headers,
             data=data,
             params=params)
         try:
             response.raise_for_status()
-            if response.status_code == 204:
+            if response.status_code == 201:
                 return True
-            return response.json()
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
             logger.error(_format_error_message(response))
             raise
+        # Handle status code != 201 : NSO doens't always return json, it can also return nothing at all
+        logger.warning('Unexpected status code for POST: {}'.format(response.status_code))
+        try:
+            return response.json()
+        except ValueError:
+            return
 
     def put(self, resource_type, media_type, data,
             path=None, params=None):
+
+        headers = self._get_headers(media_type)
+        headers['Content-Type'] = 'application/vnd.yang.data+json'
+
+
+
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.put(
             url,
             verify=self.verify_ssl,
-            headers=self._get_headers(media_type),
+            headers=headers,
             data=data,
             params=params)
         try:
             response.raise_for_status()
             if response.status_code == 204:
                 return True
-            return response.json()
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
             logger.error(_format_error_message(response))
             raise
+        # Handle status code != 204 : NSO doens't always return json, it can also return nothing at all
+        logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
+        try:
+            return response.json()
+        except ValueError:
+            return
 
-    def delete(self, resource_type, media_type, data,
+    def delete(self, resource_type, media_type, data=None,
                path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.delete(
@@ -134,11 +157,16 @@ class NSOConnection(object):
             response.raise_for_status()
             if response.status_code == 204:
                 return True
-            return response.json()
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
             logger.error(_format_error_message(response))
             raise
+        # Handle status code != 204 : NSO doens't always return json, it can also return nothing at all
+        logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
+        try:
+            return response.json()
+        except ValueError:
+            return
 
     def _get_headers(self, media_type):
         return {

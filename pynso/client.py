@@ -53,7 +53,7 @@ class NSOClient(object):
                                    path=None,
                                    params=params)
 
-    def get_data(self, datastore, data_path, params=None):
+    def get_data(self, datastore, data_path, params=None, media_type=MediaType.DATA):
         """
         Get a data entry in a datastore
 
@@ -65,7 +65,7 @@ class NSOClient(object):
         """
         data_path = '/'.join(data_path)
         return self.connection.get(resource_type=datastore,
-                                   media_type=MediaType.DATA,
+                                   media_type=media_type,
                                    path=data_path,
                                    params=params)
 
@@ -94,7 +94,7 @@ class NSOClient(object):
 
     def create_data_value(self, datastore, data_path, data, params=None):
         """
-        Create (PUT) a data entry in a datastore
+        Create (POST) a data entry in a datastore
 
         :param datastore: The target datastore
         :type  datastore: :class:`DatastoreType`
@@ -109,7 +109,7 @@ class NSOClient(object):
         :return: ``True`` if successful, otherwise error.
         """
         data_path = '/'.join(data_path)
-        return self.connection.put(resource_type=datastore,
+        return self.connection.post(resource_type=datastore,
                                    media_type=MediaType.DATA,
                                    path=data_path,
                                    data=data,
