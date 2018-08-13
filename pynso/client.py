@@ -53,6 +53,24 @@ class NSOClient(object):
                                    path=None,
                                    params=params)
 
+    def exists(self, datastore, data_path, params=None, media_type=MediaType.DATA):
+        """
+        Check if a data entry in a datastore exists
+
+        :param datastore: The target datastore
+        :type  datastore: :class:`DatastoreType`
+
+        :param data_path: The list of paths
+        :type  data_path: ``list`` of ``str`` or ``tuple``
+        """
+        data_path = '/'.join(data_path)
+        
+        return self.connection.head(resource_type=datastore,
+                                   media_type=media_type,
+                                   path=data_path,
+                                   params=params)
+
+
     def get_data(self, datastore, data_path, params=None, media_type=MediaType.DATA):
         """
         Get a data entry in a datastore
