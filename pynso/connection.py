@@ -104,11 +104,6 @@ class NSOConnection(object):
             headers=self._get_headers(media_type),
             params=params)
         try:
-            response.raise_for_status()
-
-            if response.status_code != 200:
-                logger.warning('Unexpected status code for GET: {}'.format(response.status_code))
-
             return response.status_code == 200
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
