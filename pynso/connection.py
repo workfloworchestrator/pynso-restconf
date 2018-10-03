@@ -39,7 +39,7 @@ def _format_error_message(response):
     except KeyError:
         message = 'Failed to make request or error not returned as expected'
     except ValueError:
-        message = 'No message, not json'
+        message = 'Message not json: %s' % response.text
     return 'Error code %s: %s' % (response.status_code,
                                   message)
 
