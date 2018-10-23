@@ -171,6 +171,38 @@ class NSOConnection(object):
             logger.error(_format_error_message(response))
             raise requests.HTTPError(_format_error_message(response)) from None
 
+    def patch(self, resource_type, media_type, data,
+            path=None, params=None):
+
+        headers = self._get_headers(media_type)
+        headers['Content-Type'] = 'application/vnd.yang.data+json'
+
+
+
+        url = _format_url(self.host, resource_type, path, self.ssl)
+        response = self.session.patch(
+            url,
+            verify=self.verify_ssl,
+            headers=headers,
+            data=data,
+            params=params)
+        try:
+            response.raise_for_status()
+            if response.status_code not in (200, 201, 204):
+                logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
+
+            if response.status_code in (201, 204):
+                return True
+
+            return response.json()
+        except ValueError:
+            logger.warning('Empty/Non valid JSON response')
+            return
+        except requests.HTTPError:
+            logger.error('Failed on request %s', url)
+            logger.error(_format_error_message(response))
+            raise
+
     def delete(self, resource_type, media_type, data=None,
                path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
@@ -191,7 +223,7 @@ class NSOConnection(object):
             logger.error(_format_error_message(response))
             raise requests.HTTPError(_format_error_message(response)) from None
 
-    # TODO: missing OPTIONS, PATCH
+    # TODO: missing OPTIONS
 
     def _get_headers(self, media_type):
         return {

@@ -128,6 +128,29 @@ class NSOClient(object):
         """
         data_path = '/'.join(data_path)
         return self.connection.post(resource_type=datastore,
+                                   media_type=media_type,
+                                   path=data_path,
+                                   data=data,
+                                   params=params)
+
+    def update_data_value(self, datastore, data_path, data, params=None):
+        """
+        Create (POST) a data entry in a datastore
+
+        :param datastore: The target datastore
+        :type  datastore: :class:`DatastoreType`
+
+        :param data_path: The list of paths
+        :type  data_path: ``list`` of ``str`` or ``tuple``
+
+        :param data: The new value at the given path
+        :type  data: ``dict``
+
+        :rtype: ``bool``
+        :return: ``True`` if successful, otherwise error.
+        """
+        data_path = '/'.join(data_path)
+        return self.connection.patch(resource_type=datastore,
                                    media_type=MediaType.DATA,
                                    path=data_path,
                                    data=data,
