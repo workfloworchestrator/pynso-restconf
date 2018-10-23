@@ -128,7 +128,7 @@ class NSOClient(object):
         """
         data_path = '/'.join(data_path)
         return self.connection.post(resource_type=datastore,
-                                   media_type=media_type,
+                                   media_type=MediaType.DATA,
                                    path=data_path,
                                    data=data,
                                    params=params)
