@@ -33,16 +33,24 @@ def _format_url(host, resource_type, path=None, ssl=True):
             return '%s://%s/api/%s/%s' % (protocol, host, resource_type, path)
 
 
-def _format_error_message(response):
+def raise_for_status(response):
+    """Raises stored :class:`HTTPError`, if one occurred."""
+
     try:
         message = response.json()['errors']['error'][0]['error-message']
-    except KeyError:
-        message = 'Failed to make request or error not returned as expected'
-    except ValueError:
-        message = 'Message not json. Response data: %s' % (response.text if response.text else response.reason)
-    return 'Error code %s: %s' % (response.status_code,
-                                  message)
+    except Exception:
+        message = response.text
 
+    http_error_msg = ''
+
+    if 400 <= response.status_code < 500:
+        http_error_msg = u'%s Client Error: %s for url: %s reason: %s' % (response.status_code, response.reason, response.url, message)
+
+    elif 500 <= response.status_code < 600:
+        http_error_msg = u'%s Server Error: %s for url: %s reason: %s' % (response.status_code, response.reason, response.url, message)
+
+    if http_error_msg:
+        raise requests.HTTPError(http_error_msg, response=response)
 
 class NSOConnection(object):
     response_type = 'json'
@@ -52,174 +60,118 @@ class NSOConnection(object):
         self.session = requests.Session()
         self.session.auth = (username, password)
         self.ssl = ssl
-        self.verify_ssl = verify_ssl
+        self.session.verify = verify_ssl
+
+    def _request(self, function, resource_type, media_type, data, path=None, params=None):
+        headers = self._get_headers(media_type)
+        headers['Content-Type'] = 'application/vnd.yang.data+json'
+
+        url = _format_url(self.host, resource_type, path, self.ssl)
+        response = function(
+            url,
+            headers=headers,
+            data=data,
+            params=params)
+        try:
+            raise_for_status(response)
+
+            if response.status_code not in (200, 201, 204):
+                logger.warning('Unexpected status code for %s: %s', function.__name__, response.status_code)
+
+            # Request was successful but returned no content
+            if response.status_code in (201, 204):
+                return True
+
+            try:
+                return response.json()
+            except ValueError:
+                logger.warning('Empty/Non valid JSON response')
+                return response.text
+        except requests.HTTPError as e:
+            logger.exception(e)
+            raise
 
     def get(self, resource_type, media_type, path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.get(
             url,
-            verify=self.verify_ssl,
             headers=self._get_headers(media_type),
             params=params)
         try:
-            response.raise_for_status()
-            if response.status_code != 200:
-                logger.warning('Unexpected status code for GET: {}'.format(response.status_code))
+            raise_for_status(response)
 
-            return response.json()
-        except ValueError:
-            logger.warning('Empty/Non valid JSON response')
-            return
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            message = _format_error_message(response)
-            logger.error(message)
-            raise requests.HTTPError(_format_error_message(response)) from None
+            if response.status_code != 200:
+                logger.warning('Unexpected status code for GET: %s', response.status_code)
+
+            try:
+                return response.json()
+            except ValueError:
+                logger.warning('Empty/Non valid JSON response')
+                return response.text
+        except requests.HTTPError as e:
+            logger.exception(e)
+            raise
 
     def get_plain(self, resource_type, media_type, path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.get(
             url,
-            verify=self.verify_ssl,
             headers=self._get_headers(media_type),
             params=params)
         try:
-            response.raise_for_status()
+            raise_for_status(response)
 
             if response.status_code != 200:
-                logger.warning('Unexpected status code for GET: {}'.format(response.status_code))
+                logger.warning('Unexpected status code for GET: %s', response.status_code)
 
             return response.text
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
-            raise requests.HTTPError(_format_error_message(response)) from None
+        except requests.HTTPError as e:
+            logger.exception(e)
+            raise
 
     def head(self, resource_type, media_type, path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.head(
             url,
-            verify=self.verify_ssl,
             headers=self._get_headers(media_type),
             params=params)
         try:
-            return response.status_code == 200
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
-            raise requests.HTTPError(_format_error_message(response)) from None
+            raise_for_status(response)
 
-    def post(self, resource_type, media_type, data,
-             path=None, params=None):
+            if response.status_code != 200:
+                logger.warning('Unexpected status code for HEAD: %s', response.status_code)
 
-        headers = self._get_headers(media_type)
-        headers['Content-Type'] = 'application/vnd.yang.data+json'
-
-        url = _format_url(self.host, resource_type, path, self.ssl)
-        response = self.session.post(
-            url,
-            verify=self.verify_ssl,
-            headers=headers,
-            data=data,
-            params=params)
-        try:
-            response.raise_for_status()
-
-            if response.status_code not in (200, 201, 204):
-                logger.warning('Unexpected status code for POST: {}'.format(response.status_code))
-
-            if response.status_code in (201, 204):
-                return True
-
-            return response.json()
-        except ValueError:
-            logger.warning('Empty/Non valid JSON response')
-            return
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
-            raise requests.HTTPError(_format_error_message(response)) from None
-
-    def put(self, resource_type, media_type, data,
-            path=None, params=None):
-
-        headers = self._get_headers(media_type)
-        headers['Content-Type'] = 'application/vnd.yang.data+json'
-
-        url = _format_url(self.host, resource_type, path, self.ssl)
-        response = self.session.put(
-            url,
-            verify=self.verify_ssl,
-            headers=headers,
-            data=data,
-            params=params)
-        try:
-            response.raise_for_status()
-            if response.status_code not in (200, 201, 204):
-                logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
-
-            if response.status_code in (201, 204):
-                return True
-
-            return response.json()
-        except ValueError:
-            logger.warning('Empty/Non valid JSON response')
-            return
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
-            raise requests.HTTPError(_format_error_message(response)) from None
-
-    def patch(self, resource_type, media_type, data,
-            path=None, params=None):
-
-        headers = self._get_headers(media_type)
-        headers['Content-Type'] = 'application/vnd.yang.data+json'
-
-        url = _format_url(self.host, resource_type, path, self.ssl)
-        response = self.session.patch(
-            url,
-            verify=self.verify_ssl,
-            headers=headers,
-            data=data,
-            params=params)
-        try:
-            response.raise_for_status()
-            if response.status_code not in (200, 201, 204):
-                logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
-
-            if response.status_code in (201, 204):
-                return True
-
-            return response.json()
-        except ValueError:
-            logger.warning('Empty/Non valid JSON response')
-            return
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
+            return True
+        except requests.HTTPError as e:
+            logger.exception(e)
             raise
+
+    def post(self, *args, **kwargs):
+        return self._request(self.session.post, *args, **kwargs)
+
+    def put(self, *args, **kwargs):
+        return self._request(self.session.put, *args, **kwargs)
+
+    def patch(self, *args, **kwargs):
+        return self._request(self.session.patch, *args, **kwargs)
 
     def delete(self, resource_type, media_type, data=None,
                path=None, params=None):
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.delete(
             url,
-            verify=self.verify_ssl,
             headers=self._get_headers(media_type),
             data=data,
             params=params)
         try:
-            response.raise_for_status()
-            if response.status_code in (200, 201, 204):
-                try:
-                    return response.json()
-                except ValueError:
-                    return True
-        except requests.HTTPError:
-            logger.error('Failed on request %s', url)
-            logger.error(_format_error_message(response))
-            raise requests.HTTPError(_format_error_message(response)) from None
+            raise_for_status(response)
+            if response.status_code != 204:
+                logger.warning('Unexpected status code for DELETE: %s', response.status_code)
+
+            return True
+        except requests.HTTPError as e:
+            logger.exception(e)
+            raise
 
     # TODO: missing OPTIONS
 
