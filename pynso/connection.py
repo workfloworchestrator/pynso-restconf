@@ -211,10 +211,11 @@ class NSOConnection(object):
             params=params)
         try:
             response.raise_for_status()
-            if response.status_code != 204:
-                logger.warning('Unexpected status code for PUT: {}'.format(response.status_code))
-
-            return True
+            if response.status_code in (200, 201, 204):
+                try:
+                    return response.json()
+                except ValueError:
+                    return True
         except requests.HTTPError:
             logger.error('Failed on request %s', url)
             logger.error(_format_error_message(response))
