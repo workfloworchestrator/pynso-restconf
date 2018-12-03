@@ -39,7 +39,7 @@ def _format_error_message(response):
     except KeyError:
         message = 'Failed to make request or error not returned as expected'
     except ValueError:
-        message = 'Message not json: %s' % response.text
+        message = 'Message not json. Response data: %s' % (response.text if response.text else response.reason)
     return 'Error code %s: %s' % (response.status_code,
                                   message)
 
@@ -63,7 +63,6 @@ class NSOConnection(object):
             params=params)
         try:
             response.raise_for_status()
-
             if response.status_code != 200:
                 logger.warning('Unexpected status code for GET: {}'.format(response.status_code))
 
@@ -176,8 +175,6 @@ class NSOConnection(object):
 
         headers = self._get_headers(media_type)
         headers['Content-Type'] = 'application/vnd.yang.data+json'
-
-
 
         url = _format_url(self.host, resource_type, path, self.ssl)
         response = self.session.patch(

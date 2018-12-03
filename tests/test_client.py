@@ -84,44 +84,31 @@ class MockConnection(object):
         return os.path.join(fixture_dir, file)
 
     def get(self, resource_type, media_type, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type,
-                            media_type,
-                            path)
+        key = '%s-%s-%s' % (resource_type, media_type, path)
         with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
             json_data = json.load(json_file)
         return json_data
 
     def get_plain(self, resource_type, media_type, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type,
-                            media_type,
-                            path)
+        key = '%s-%s-%s' % (resource_type, media_type, path)
         with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as file_:
             data = file_.readlines()
         return data
 
-    def post(self, resource_type, media_type, data,
-             path=None, params=None):
-        key = '%s-%s-%s' % (resource_type,
-                            media_type,
-                            path)
+    def post(self, resource_type, media_type, data, path=None, params=None):
+        key = '%s-%s-%s' % (resource_type, media_type, path)
         with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
             json_data = json.load(json_file)
         return json_data
 
-    def put(self, resource_type, media_type, data,
-            path=None, params=None):
-        key = '%s-%s-%s' % (resource_type,
-                            media_type,
-                            path)
+    def put(self, resource_type, media_type, data, path=None, params=None):
+        key = '%s-%s-%s' % (resource_type, media_type, path)
         with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
             json_data = json.load(json_file)
         return json_data
 
-    def delete(self, resource_type, media_type,
-               path=None, params=None):
-        key = '%s-%s-%s' % (resource_type,
-                            media_type,
-                            path)
+    def delete(self, resource_type, media_type, path=None, params=None):
+        key = '%s-%s-%s' % (resource_type, media_type, path)
         with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
             json_data = json.load(json_file)
         return json_data
