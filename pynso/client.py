@@ -12,9 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-'''
+"""
 The main client class for the NSO APIs
-'''
+"""
 from .connection import NSOConnection
 from .resourcetypes import MediaType
 from .datastores import DatastoreType
@@ -66,10 +66,9 @@ class NSOClient(object):
         data_path = '/'.join(data_path)
         
         return self.connection.head(resource_type=datastore,
-                                   media_type=media_type,
-                                   path=data_path,
-                                   params=params)
-
+                                    media_type=media_type,
+                                    path=data_path,
+                                    params=params)
 
     def get_data(self, datastore, data_path, params=None, media_type=MediaType.DATA):
         """
@@ -89,7 +88,7 @@ class NSOClient(object):
 
     def set_data_value(self, datastore, data_path, data, params=None):
         """
-        Update (PUT) a data entry in a datastore
+        Update (PUT) a complete data entry in a datastore
 
         :param datastore: The target datastore
         :type  datastore: :class:`DatastoreType`
@@ -135,7 +134,7 @@ class NSOClient(object):
 
     def update_data_value(self, datastore, data_path, data, params=None):
         """
-        Create (POST) a data entry in a datastore
+        Partial update (PATCH) elements of a data entry in a datastore by only providing the changed items.
 
         :param datastore: The target datastore
         :type  datastore: :class:`DatastoreType`
