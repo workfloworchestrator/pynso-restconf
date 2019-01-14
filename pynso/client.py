@@ -200,3 +200,24 @@ class NSOClient(object):
             media_type=MediaType.DATA,
             path='rollback',
             data={'file': name})
+
+    def call_operation(self, datastore, data_path, data, params=None):
+        """
+        Call (POST) an operation in a datastore.
+
+        :param datastore: The target datastore
+        :type  datastore: :class:`DatastoreType`
+        :param data_path: The list of paths
+        :type  data_path: ``list`` of ``str`` or ``tuple``
+        :param data: The new value at the given path
+        :type  data: ``dict``
+        :rtype: ``bool``
+
+        :return: ``True`` if successful, otherwise error.
+        """
+        data_path = '/'.join(data_path)
+        return self.connection.post(resource_type=datastore,
+                                    media_type=MediaType.OPERATION,
+                                    path=data_path,
+                                    data=data,
+                                    params=params)
