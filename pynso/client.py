@@ -203,7 +203,7 @@ class NSOClient(object):
 
     def call_operation(self, datastore, data_path, data, params=None):
         """
-        Call (POST) an operation in a datastore.
+        Call (POST) an operation to a datastore.
 
         :param datastore: The target datastore
         :type  datastore: :class:`DatastoreType`
