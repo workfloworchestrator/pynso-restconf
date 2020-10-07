@@ -1,4 +1,5 @@
 *.py[cod]
+__pycache__
 
 # C extensions
 *.so
@@ -12,6 +13,7 @@
 *.egg-info
 build
 eggs
+.eggs
 parts
 bin
 var
@@ -29,6 +31,7 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+coverage.xml
 
 # Complexity
 output/*.html
@@ -39,3 +42,15 @@ docs/_build
 
 # Cookiecutter
 output/
+
+# Mypy
+.mypy_cache
+
+# Venvs
+.venv
+
+# Pytest
+.pytest_cache
+
+# VSCode
+.vscode

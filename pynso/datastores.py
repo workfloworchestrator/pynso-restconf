@@ -12,25 +12,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-'''
-Utility methods for converting media and resource types, with their ENUMs
-'''
 
-__all__ = ['DatastoreType']
+"""
+Datastore type enum
+"""
+
+from enum import Enum
+
+__all__ = ["DatastoreType"]
 
 
-class DatastoreType(object):
-    '''
+class DatastoreType(Enum):
+    """
     An enum of the resource types in the API.
 
-    :cvar config: Link to the "config" resource
-    :cvar running: Link to the "running" resource.
-    :cvar operational: Link to the "operational" resource.
-    :cvar operations: Container for available operations (i.e: YANG rpc statements).
-    :cvar rollbacks: Container for available rollback files.
-    '''
-    CONFIG = 'config'
-    RUNNING = 'running'
-    OPERATIONAL = 'operational'
-    OPERATIONS = 'operations'
-    ROLLBACKS = 'rollbacks'
+    """
+
+    UNIFIED = "all"
+    CONFIG = "config"
+    NONCONFIG = "nonconfig"

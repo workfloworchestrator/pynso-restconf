@@ -12,108 +12,234 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-import json
 import unittest
+from unittest import mock
+
+import requests
+
+from pynso.connection import NSOConnection
 from pynso.client import NSOClient
 from pynso.datastores import DatastoreType
 
 
+def raise_http_error(status_code=500):
+    mock_response = requests.Response()
+    mock_response.status_code = status_code
+    return requests.HTTPError("message", response=mock_response)
+
+
 class TestClient(unittest.TestCase):
     def setUp(self):
-        NSOClient.connectionCls = MockConnection
-        self.client = NSOClient('test.com', 'test', 'testpass')
+        NSOClient.connectionCls = mock.MagicMock(spec=NSOConnection)
+        self.mock_connection = NSOClient.connectionCls()
+        self.client = NSOClient("test.com", "test", "testpass")
 
     def test_info(self):
+        self.mock_connection.get.return_value = {"ietf-yang-library:modules-state": mock.sentinel.payload}
+
         info = self.client.info()
-        self.assertEqual(info['version'], '0.5')
+
+        self.assertEqual(info, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(data_store="data", path="ietf-yang-library:modules-state")
 
     def test_get_data(self):
-        store = self.client.get_data(DatastoreType.RUNNING, ('devices', 'ex0'))
-        self.assertEqual(store['snmp:agent']['enabled'], True)
+        self.mock_connection.get.return_value = mock.sentinel.payload
+
+        data = self.client.get_data(("devices", "ex0"))
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(data_store="data", path="devices/ex0", params=None)
+
+    def test_get_data_nonconfig(self):
+        self.mock_connection.get.return_value = mock.sentinel.payload
+
+        data = self.client.get_data(("devices", "ex0"), datastore=DatastoreType.NONCONFIG)
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(
+            data_store="data", path="devices/ex0", params={"content": "nonconfig"}
+        )
+
+    def test_exists(self):
+        self.mock_connection.head.return_value = mock.sentinel.payload
+
+        data = self.client.exists(("devices", "ex0"), datastore=DatastoreType.NONCONFIG)
+
+        self.assertTrue(data)
+        self.mock_connection.head.assert_called_once_with(
+            data_store="data", path="devices/ex0", params={"content": "nonconfig"}
+        )
+
+    def test_exists_non_existing(self):
+        self.mock_connection.head.side_effect = raise_http_error(404)
+
+        data = self.client.exists(("devices", "ex0"), datastore=DatastoreType.NONCONFIG)
+
+        self.assertFalse(data)
+        self.mock_connection.head.assert_called_once_with(
+            data_store="data", path="devices/ex0", params={"content": "nonconfig"}
+        )
+
+    def test_exists_error(self):
+        self.mock_connection.head.side_effect = raise_http_error(500)
+
+        with self.assertRaises(requests.HTTPError):
+            self.client.exists(("devices", "ex0"), datastore=DatastoreType.NONCONFIG)
+
+        self.mock_connection.head.assert_called_once_with(
+            data_store="data", path="devices/ex0", params={"content": "nonconfig"}
+        )
+
+    def test_get_data_config(self):
+        self.mock_connection.get.return_value = mock.sentinel.payload
+
+        data = self.client.get_data(("devices", "ex0"), datastore=DatastoreType.CONFIG)
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(
+            data_store="data", path="devices/ex0", params={"content": "config"}
+        )
 
     def test_set_data_value(self):
-        test = {'my': 'new'}
-        store = self.client.set_data_value(DatastoreType.RUNNING, ('devices', 'ex0'), test)
-        self.assertTrue(store)
+        self.mock_connection.put.return_value = mock.sentinel.payload
+        test = {"my": "new"}
+
+        data = self.client.set_data_value(("devices", "ex0"), test)
+
+        self.assertIsNone(data)
+        self.mock_connection.put.assert_called_once_with(
+            data_store="data", path="devices/ex0", data={"my": "new"}, params=None
+        )
 
     def test_create_data_value(self):
-        test = {'my': 'new'}
-        store = self.client.create_data_value(DatastoreType.RUNNING, ('devices', 'ex0'), test)
-        self.assertTrue(store)
+        self.mock_connection.post.return_value = mock.sentinel.payload
+        test = {"my": "new"}
+
+        data = self.client.create_data_value(("devices", "ex0"), test)
+
+        self.assertIsNone(data)
+        self.mock_connection.post.assert_called_once_with(
+            data_store="data", path="devices/ex0", data={"my": "new"}, params=None
+        )
+
+    def test_call_operation(self):
+        self.mock_connection.post.return_value = {"tailf-ncs:output": mock.sentinel.payload}
+        test = {"my": "new"}
+
+        data = self.client.call_operation(("devices", "ex0"), test)
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.post.assert_called_once_with(
+            data_store="data", path="devices/ex0", data={"my": "new"}, params=None
+        )
+
+    def test_update_data_value(self):
+        self.mock_connection.patch.return_value = mock.sentinel.payload
+        test = {"my": "new"}
+
+        data = self.client.update_data_value(("devices", "ex0"), test)
+
+        self.assertIsNone(data)
+        self.mock_connection.patch.assert_called_once_with(
+            data_store="data", path="devices/ex0", data={"my": "new"}, params=None
+        )
 
     def test_delete_path(self):
-        test = {'my': 'new'}
-        store = self.client.delete_path(DatastoreType.RUNNING, ('devices', 'ex0'), test)
-        self.assertTrue(store)
+        self.mock_connection.delete.return_value = mock.sentinel.payload
+
+        data = self.client.delete_path(("devices", "ex0"))
+
+        self.assertIsNone(data)
+        self.mock_connection.delete.assert_called_once_with(data_store="data", path="devices/ex0", params=None)
 
     def test_get_datastore(self):
-        store = self.client.get_datastore(DatastoreType.RUNNING)
-        self.assertEqual(store['operations']['lock'], '/api/running/_lock')
+        self.mock_connection.get.return_value = {"ietf-restconf:data": mock.sentinel.payload}
+
+        data = self.client.get_datastore("running")
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(path="ds/ietf-datastores:running", params=None)
 
     def test_get_rollbacks(self):
+        self.mock_connection.get.return_value = {"tailf-rollback:rollback-files": {"file": mock.sentinel.payload}}
+
         rollbacks = self.client.get_rollbacks()
-        self.assertEqual(rollbacks['rollbacks']['file']['name'], '86')
+
+        self.assertEqual(rollbacks, mock.sentinel.payload)
+        self.mock_connection.get.assert_called_once_with(path="tailf-rollback:rollback-files")
 
     def test_get_rollback(self):
-        rollback = self.client.get_rollback('86')
-        self.assertEqual(len(rollback), 45)
+        self.mock_connection.post.return_value = {"tailf-rollback:output": {"content": mock.sentinel.payload}}
+
+        rollback = self.client.get_rollback(0)
+
+        self.assertEqual(rollback, mock.sentinel.payload)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/get-rollback-file", data={"input": {"id": 0}}
+        )
 
     def test_apply_rollback(self):
-        rollback = self.client.apply_rollback(DatastoreType.RUNNING, '86')
-        self.assertEqual(len(rollback), 0)
+        self.mock_connection.post.return_value = {"tailf-rollback:output": mock.sentinel.payload}
+
+        data = self.client.apply_rollback(0)
+
+        self.assertIsNone(data)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/apply-rollback-file", data={"input": {"id": 0}}
+        )
+
+    def test_apply_rollback_options(self):
+        self.mock_connection.post.return_value = {"tailf-rollback:output": mock.sentinel.payload}
+
+        data = self.client.apply_rollback(0, selective=True, path="x")
+
+        self.assertIsNone(data)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/apply-rollback-file",
+            data={"input": {"id": 0, "selective": {}, "path": "x"}},
+        )
+
+    def test_get_rollback_by_fixed_number(self):
+        self.mock_connection.post.return_value = {"tailf-rollback:output": {"content": mock.sentinel.payload}}
+
+        rollback = self.client.get_rollback_by_fixed_number(86)
+
+        self.assertEqual(rollback, mock.sentinel.payload)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/get-rollback-file", data={"input": {"fixed-number": 86}}
+        )
+
+    def test_apply_rollback_by_fixed_number(self):
+        self.mock_connection.post.return_value = {"tailf-rollback:output": mock.sentinel.payload}
+
+        data = self.client.apply_rollback_by_fixed_number(86)
+
+        self.assertIsNone(data)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/apply-rollback-file", data={"input": {"fixed-number": 86}},
+        )
+
+    def test_apply_rollback_by_fixed_number_options(self):
+        self.mock_connection.post.return_value = {"tailf-rollback:output": mock.sentinel.payload}
+
+        data = self.client.apply_rollback_by_fixed_number(86, selective=True, path="x")
+
+        self.assertIsNone(data)
+        self.mock_connection.post.assert_called_once_with(
+            path="tailf-rollback:rollback-files/apply-rollback-file",
+            data={"input": {"fixed-number": 86, "selective": {}, "path": "x"}},
+        )
+
+    def test_query(self):
+        self.mock_connection.post.return_value = {"tailf-rest-query:query-result": mock.sentinel.payload}
+
+        data = self.client.query(data={"immidiate-query": {}})
+
+        self.assertEqual(data, mock.sentinel.payload)
+        self.mock_connection.post.assert_called_once_with(path="tailf/query", data={"immidiate-query": {}})
 
 
-class MockConnection(object):
-    def __init__(self, host, username, password, ssl, verify_ssl):
-        pass
-
-    path_to_fixture_mapping = {
-        'None-application/vnd.yang.api-None': 'api-info.json',
-        'running-application/vnd.yang.datastore-None': 'api-running-datastore.json',
-        'rollbacks-application/vnd.yang.api-None': 'api-rollbacks.json',
-        'rollbacks-application/vnd.yang.api-86': 'api-rollbacks-86.txt',
-        'running-application/vnd.yang.data-rollback': 'api-rollback-apply.json',
-        'running-application/vnd.yang.data-devices/ex0': 'api-running-data.json'
-    }
-
-    def _path_to(self, file):
-        fixture_dir = os.path.join(
-            os.path.abspath(os.path.split(__file__)[0]),
-            'fixtures')
-        return os.path.join(fixture_dir, file)
-
-    def get(self, resource_type, media_type, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type, media_type, path)
-        with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
-            json_data = json.load(json_file)
-        return json_data
-
-    def get_plain(self, resource_type, media_type, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type, media_type, path)
-        with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as file_:
-            data = file_.readlines()
-        return data
-
-    def post(self, resource_type, media_type, data, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type, media_type, path)
-        with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
-            json_data = json.load(json_file)
-        return json_data
-
-    def put(self, resource_type, media_type, data, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type, media_type, path)
-        with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
-            json_data = json.load(json_file)
-        return json_data
-
-    def delete(self, resource_type, media_type, path=None, params=None):
-        key = '%s-%s-%s' % (resource_type, media_type, path)
-        with open(self._path_to(MockConnection.path_to_fixture_mapping[key])) as json_file:
-            json_data = json.load(json_file)
-        return json_data
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     sys.exit(unittest.main())

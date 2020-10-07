@@ -1,17 +1,17 @@
 Getting started
 ~~~~~~~~~~~~~~~
 
-In order to enable REST in NSO, REST must be enabled in ncs.conf.
-The web server configuration for REST is shared with the WebUI's config.
-However, the WebUI does not have to be enabled for REST to work.
+In order to enable RESTCONF in NSO, RESTCONF must be enabled in the ncs.conf configuration
+file. The web server configuration for RESTCONF is shared with the WebUI's config. However, the
+WebUI does not have to be enabled for RESTCONF to work.
 
-Here's a minimal example of what is needed in the conf file:
+Here's a minimal example of what is needed in the ncs.conf file:
 
 .. sourcecode:: xml
 
-    <rest>
+    <restconf>
         <enabled>true</enabled>
-    </rest>
+    </restconf>
     <webui>
         <enabled>false</enabled>
         <transport>

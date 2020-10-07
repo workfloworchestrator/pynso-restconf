@@ -13,23 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import unittest
-from pynso.resourcetypes import (ResourceType, MediaType,
-                                 resource_type_to_media_type,
-                                 media_type_to_resource_type)
+from typing import Any, Dict, Union
 
+__all__ = ["Params", "JSON"]
 
-class TestResourceTypes(unittest.TestCase):
-    def test_dict_sizes(self):
-        self.assertEqual(len(dir(ResourceType)), len(dir(MediaType)))
-
-    def test_map(self):
-        self.assertEqual(resource_type_to_media_type(ResourceType.API), MediaType.API)
-
-    def test_reverse_map(self):
-        self.assertEqual(media_type_to_resource_type(MediaType.API), ResourceType.API)
-
-
-if __name__ == '__main__':
-    import sys
-    sys.exit(unittest.main())
+Params = Dict[str, Union[str, int, bool]]
+JSON = Any

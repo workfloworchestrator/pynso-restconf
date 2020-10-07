@@ -24,7 +24,7 @@ Extensible Markup Language (XML), CLI, and Simple Network Management Protocol (S
 Authors
 -------
 
-This Python module was developed by the Research and Development team at `Dimension Data`_. This module is
+This Python module was developed by the Research and Development team at `Dimension Data`_. It was converted to Restconf by `SURF`. This module is
 provided under the `Apache 2.0 license`_ and the source code is available at `github.com`_.
 
 Installation (stable version)
@@ -64,23 +64,22 @@ dictionaries and YANG is completed by the module automatically.
 
     from pprint import pprint
 
-    from pynso.client import NSOClient
-    from pynso.datastores import DatastoreType
+    from pynso import NSOClient
     
     # Setup a client
     client = NSOClient('10.159.91.14', 'admin', 'admin')
     
     # Get information about the API
     print('Getting API version number')
-    pprint(client.info()['version'])
+    pprint(client.info())
     
     # Get the information about the running datastore
-    print('Getting the contents of the running datastore')
-    pprint(client.get_datastore(DatastoreType.RUNNING))
+    print('Getting the information about the running datastore')
+    pprint(client.get_datastore("running))
     
     # Get a data path
     print('Getting a specific data path: snmp:snmp namespace and the agent data object')
-    pprint(client.get_data(DatastoreType.RUNNING, ('snmp:snmp', 'agent')))
+    pprint(client.get_data(('snmp:snmp', 'agent')))
 
 
 Documentation
@@ -105,4 +104,5 @@ Main
 .. _`Apache 2.0 license`: https://www.apache.org/licenses/LICENSE-2.0.html
 
 .. _`Dimension Data`: http://www.dimensiondata.com/
+.. _`SURF`: https://www.surf.nl/
 .. _`github.com`: https://github.com/DimensionDataCBUSydney/pynso
