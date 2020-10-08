@@ -1,4 +1,4 @@
-PyNSO
+PyNSO-restconf
 =====
 
 |Build| |PyPI1| |PyPI2| |PyPI3| |Documentation Status| |Coverage|
@@ -15,13 +15,13 @@ To install use pip:
 
 ::
 
-    $ pip install pynso
+    $ pip install pynso-restconf
 
 Or clone the repo:
 
 ::
 
-    $ git clone https://github.com/DimensionDataResearch/pynso.git
+    $ git clone https://github.com/workfloworchestrator/pynso-restconf.git
     $ python setup.py install
 
 Usage
@@ -31,29 +31,26 @@ Usage
 
     from pprint import pprint
 
-    from pynso.client import NSOClient
-    from pynso.datastores import DatastoreType
+    from pynso import NSOClient
 
     # Setup a client
     client = NSOClient('10.123.92.12', 'admin', 'admin')
 
     # Get information about the API
     print('Getting API version number')
-    pprint(client.info()['version'])
+    pprint(client.info())
 
     # Get the information about the running datastore
-    print('Getting the contents of the running datastore')
-    pprint(client.get_datastore(DatastoreType.RUNNING))
+    print('Getting information about the running datastore')
+    pprint(client.get_datastore("running"))
 
-.. |Build| image:: https://travis-ci.org/DimensionDataResearch/pynso.svg?branch=master
-   :target: https://travis-ci.org/DimensionDataResearch/pynso
-.. |PyPI1| image:: https://img.shields.io/pypi/v/pynso.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso
-.. |PyPI2| image:: https://img.shields.io/pypi/l/pynso.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso
-.. |PyPI3| image:: https://img.shields.io/pypi/pyversions/pynso.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso
-.. |Documentation Status| image:: https://readthedocs.org/projects/pynso/badge/?version=latest
-   :target: http://pynso.readthedocs.io/en/latest/?badge=latest
-.. |Coverage| image:: https://coveralls.io/repos/github/DimensionDataResearch/pynso/badge.svg?branch=master
-   :target: https://coveralls.io/github/DimensionDataResearch/pynso?branch=master
+.. |Build| image:: https://github.com/workfloworchestrator/pynso-restconf/workflows/Python%20package/badge.svg
+   :target: https://github.com/workfloworchestrator/pynso-restconf
+.. |PyPI1| image:: https://img.shields.io/pypi/v/pynso-restconf.svg?maxAge=2592000
+   :target: https://pypi.python.org/pypi/pynso-restconf
+.. |PyPI2| image:: https://img.shields.io/pypi/l/pynso-restconf.svg?maxAge=2592000
+   :target: https://pypi.python.org/pypi/pynso-restconf
+.. |PyPI3| image:: https://img.shields.io/pypi/pyversions/pynso-restconf.svg?maxAge=2592000
+   :target: https://pypi.python.org/pypi/pynso-restconf
+.. |Documentation Status| image:: https://readthedocs.org/projects/pynso-restconf/badge/?version=latest
+   :target: http://pynso-restconf.readthedocs.io/en/latest/?badge=latest
