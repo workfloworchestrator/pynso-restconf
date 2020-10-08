@@ -14,12 +14,13 @@
 # limitations under the License.
 
 import json
-from typing import Optional, Any, Callable, List
 import logging
 from http import HTTPStatus
+from typing import Any, Callable, List, Optional
 
 import requests
-from .types import Params, JSON
+
+from .types import JSON, Params
 
 logger = logging.getLogger(__name__)
 

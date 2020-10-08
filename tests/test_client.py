@@ -17,8 +17,8 @@ from unittest import mock
 
 import requests
 
-from pynso.connection import NSOConnection
 from pynso.client import NSOClient
+from pynso.connection import NSOConnection
 from pynso.datastores import DatastoreType
 
 

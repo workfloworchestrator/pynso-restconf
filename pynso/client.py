@@ -18,13 +18,13 @@ The main client class for the NSO APIs
 """
 
 from http import HTTPStatus
-from typing import Optional, Iterable
+from typing import Iterable, Optional
 
 import requests
 
 from .connection import NSOConnection
 from .datastores import DatastoreType
-from .types import Params, JSON
+from .types import JSON, Params
 
 __all__ = ["NSOClient"]
 
