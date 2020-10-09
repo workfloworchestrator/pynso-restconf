@@ -117,7 +117,7 @@ class NSOConnection:
     def get(self, *args: Any, **kwargs: Any) -> JSON:
         response = self._request(self.session.get, *args, **kwargs)
 
-        if response.status_code not in (HTTPStatus.OK,):
+        if response.status_code != HTTPStatus.OK:
             logger.warning("Unexpected status code for GET: %s", response.status_code)
 
         return _handle_json(response)
@@ -125,16 +125,16 @@ class NSOConnection:
     def head(self, *args: Any, **kwargs: Any) -> None:
         response = self._request(self.session.head, *args, **kwargs)
 
-        if response.status_code not in (HTTPStatus.OK,):
+        if response.status_code != HTTPStatus.OK:
             logger.warning("Unexpected status code for HEAD: %s", response.status_code)
 
     def post(self, *args: Any, **kwargs: Any) -> Optional[JSON]:
         response = self._request(self.session.post, *args, **kwargs)
 
-        if response.status_code == HTTPStatus.NO_CONTENT:
+        if response.status_code in (HTTPStatus.NO_CONTENT, HTTPStatus.CREATED):
             return None
 
-        if response.status_code not in (HTTPStatus.OK,):
+        if response.status_code != HTTPStatus.OK:
             logger.warning("Unexpected status code for POST: %s", response.status_code)
 
         return _handle_json(response)
@@ -142,10 +142,10 @@ class NSOConnection:
     def put(self, *args: Any, **kwargs: Any) -> Optional[JSON]:
         response = self._request(self.session.put, *args, **kwargs)
 
-        if response.status_code == HTTPStatus.NO_CONTENT:
+        if response.status_code in (HTTPStatus.NO_CONTENT, HTTPStatus.CREATED):
             return None
 
-        if response.status_code not in (HTTPStatus.OK, HTTPStatus.CREATED):
+        if response.status_code != HTTPStatus.OK:
             logger.warning("Unexpected status code for PUT: %s", response.status_code)
 
         return _handle_json(response)
@@ -153,19 +153,19 @@ class NSOConnection:
     def patch(self, *args: Any, **kwargs: Any) -> None:
         response = self._request(self.session.patch, *args, **kwargs)
 
-        if response.status_code not in (HTTPStatus.NO_CONTENT,):
+        if response.status_code != HTTPStatus.NO_CONTENT:
             logger.warning("Unexpected status code for PATCH: %s", response.status_code)
 
     def delete(self, *args: Any, **kwargs: Any) -> None:
         response = self._request(self.session.delete, *args, **kwargs)
 
-        if response.status_code not in (HTTPStatus.NO_CONTENT,):
+        if response.status_code != HTTPStatus.NO_CONTENT:
             logger.warning("Unexpected status code for DELETE: %s", response.status_code)
 
     def options(self, *args: Any, **kwargs: Any) -> List[str]:
         response = self._request(self.session.options, *args, **kwargs)
 
-        if response.status_code not in (HTTPStatus.OK,):
+        if response.status_code != HTTPStatus.OK:
             logger.warning("Unexpected status code for OPTIONS: %s", response.status_code)
 
         return response.headers["ALLOW"].split(",")
