@@ -43,7 +43,7 @@ You can install latest development version from our Git repository:
 
 .. sourcecode:: bash
 
-    pip install -e git+https://github.com/DimensionDataCBUSydney/pynso.git@trunk#egg=pynso
+    pip install -e git+https://github.com/workfloworchestrator/pynso-restconf.git@master#egg=pynso
 
 Upgrading
 ---------
@@ -105,4 +105,4 @@ Main
 
 .. _`Dimension Data`: http://www.dimensiondata.com/
 .. _`SURF`: https://www.surf.nl/
-.. _`github.com`: https://github.com/DimensionDataCBUSydney/pynso
+.. _`github.com`: https://github.com/workfloworchestrator/pynso-restconf

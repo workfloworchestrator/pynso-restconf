@@ -24,7 +24,7 @@ setup(
     description="A Python client library for Cisco NSO (previously tail-f)",
     long_description=long_description,
     url="https://github.com/workfloworchestrator/pynso-restconf",
-    download_url="https://github.com/tonybaloney/DimensionDataCBUSydney/tarball/" + __version__,
+    # download_url="https://github.com/tonybaloney/DimensionDataCBUSydney/tarball/" + __version__,
     license="APACHE2",
     classifiers=[
         "Development Status :: 3 - Alpha",
