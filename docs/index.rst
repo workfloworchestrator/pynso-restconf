@@ -34,7 +34,7 @@ PyNSO is available on PyPi. You can install latest stable version using pip:
 
 .. sourcecode:: bash
 
-    pip install pynso
+    pip install pynso-restconf
 
 Installation (development version)
 ----------------------------------
