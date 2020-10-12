@@ -3,7 +3,7 @@ from os import path
 
 from setuptools import find_packages, setup
 
-__version__ = "2.0.0"
+import pynso
 
 here = path.abspath(path.dirname(__file__))
 
@@ -20,7 +20,7 @@ dependency_links = [x.strip().replace("git+", "") for x in all_reqs if "git+" no
 
 setup(
     name="pynso-restconf",
-    version=__version__,
+    version=pynso.__version__,
     description="A Python client library for Cisco NSO (previously tail-f)",
     long_description=long_description,
     url="https://github.com/workfloworchestrator/pynso-restconf",

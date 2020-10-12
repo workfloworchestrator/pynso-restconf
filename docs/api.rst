@@ -12,3 +12,9 @@ Enumerations
 
 .. autoclass:: pynso.datastores.DatastoreType
     :members:
+
+
+Types
+=====
+
+ .. autodata:: pynso.types.Params

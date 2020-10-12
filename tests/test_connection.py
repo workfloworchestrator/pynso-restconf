@@ -32,19 +32,36 @@ class TestConnection(unittest.TestCase):
 
     def test_url_format(self):
         self.assertEqual(
-            _format_url(host="test.com", root="restconf", data_store="data", path="foo/bar",),
+            _format_url(
+                host="test.com",
+                root="restconf",
+                data_store="data",
+                path="foo/bar",
+            ),
             "https://test.com/restconf/data/foo/bar",
         )
 
     def test_url_format_http(self):
         self.assertEqual(
-            _format_url(host="test.com", root="restconf", data_store="data", path="foo/bar", ssl=False,),
+            _format_url(
+                host="test.com",
+                root="restconf",
+                data_store="data",
+                path="foo/bar",
+                ssl=False,
+            ),
             "http://test.com/restconf/data/foo/bar",
         )
 
     def test_url_format_http_no_path(self):
         self.assertEqual(
-            _format_url(host="test.com", root="restconf", data_store="data", path=None, ssl=False,),
+            _format_url(
+                host="test.com",
+                root="restconf",
+                data_store="data",
+                path=None,
+                ssl=False,
+            ),
             "http://test.com/restconf/data",
         )
 
@@ -63,28 +80,38 @@ class TestConnection(unittest.TestCase):
     def test_get(self):
         test = {"a": "b"}
         self.adapter.register_uri("GET", "/restconf/data", json=test, status_code=200)
-        response = self.connection.get("data",)
+        response = self.connection.get(
+            "data",
+        )
         self.assertEqual(test["a"], response["a"])
 
     def test_get_error(self):
         self.adapter.register_uri("GET", "/restconf/data", json=self.test_error, status_code=404)
         with self.assertRaises(requests.HTTPError):
-            self.connection.get("data",)
+            self.connection.get(
+                "data",
+            )
 
     def test_get_error_plain(self):
         self.adapter.register_uri("GET", "/restconf/data", text="should be json", status_code=200)
         with self.assertRaises(json.decoder.JSONDecodeError):
-            self.connection.get("data",)
+            self.connection.get(
+                "data",
+            )
 
     def test_head(self):
         self.adapter.register_uri("HEAD", "/restconf/data", status_code=200)
-        response = self.connection.head("data",)
+        response = self.connection.head(
+            "data",
+        )
         self.assertIsNone(response)
 
     def test_head_error(self):
         self.adapter.register_uri("HEAD", "/restconf/data", json=self.test_error, status_code=500)
         with self.assertRaises(requests.HTTPError):
-            self.connection.head("data",)
+            self.connection.head(
+                "data",
+            )
 
     def test_put(self):
         test = {"a": "b"}
@@ -96,7 +123,7 @@ class TestConnection(unittest.TestCase):
         test = {"a": "b"}
         self.adapter.register_uri("PUT", "/restconf/data", json=test, status_code=201)
         response = self.connection.put("data", data={"test": "data"})
-        self.assertEqual(test, response)
+        self.assertIsNone(response)
 
     def test_put_no_response(self):
         self.adapter.register_uri("PUT", "/restconf/data", status_code=204)

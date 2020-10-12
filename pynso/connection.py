@@ -34,11 +34,11 @@ def _format_url(
     path_str = f"/{path}" if path else ""
     data_store_str = f"/{data_store}" if data_store else ""
 
-    return "%s://%s/%s%s%s" % (protocol, host, root, data_store_str, path_str)
+    return f"{protocol}://{host}/{root}{data_store_str}{path_str}"
 
 
 def raise_for_status(response: requests.Response) -> None:
-    """Raises stored :class:`HTTPError`, if one occurred."""
+    """Raises stored :class:`requests.HTTPError`, if one occurred."""
 
     try:
         message = response.json()["errors"]["error"][0]["error-message"]
@@ -48,19 +48,13 @@ def raise_for_status(response: requests.Response) -> None:
     http_error_msg = ""
 
     if 400 <= response.status_code < 500:
-        http_error_msg = "%s Client Error: %s for url: %s reason: %s" % (
-            response.status_code,
-            response.reason,
-            response.url,
-            message,
+        http_error_msg = (
+            f"{response.status_code} Client Error: {response.reason} for url: {response.url} reason: {message}"
         )
 
     elif 500 <= response.status_code < 600:
-        http_error_msg = "%s Server Error: %s for url: %s reason: %s" % (
-            response.status_code,
-            response.reason,
-            response.url,
-            message,
+        http_error_msg = (
+            f"{response.status_code} Server Error: {response.reason} for url: {response.url} reason: {message}"
         )
 
     if http_error_msg:

@@ -1,5 +1,15 @@
 -r requirements.txt
-coveralls
-requests-mock
-isort
 black
+flake8
+flake8-bandit
+flake8-bugbear
+flake8-comprehensions
+flake8-docstrings
+flake8-logging-format
+flake8-pep3101
+flake8-print
+flake8-rst
+flake8-rst-docstrings
+isort
+mypy
+requests-mock

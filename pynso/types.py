@@ -13,9 +13,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Mypy Types needed for pynso-restconf."""
+
 from typing import Any, Dict, Union
 
 __all__ = ["Params", "JSON"]
 
 Params = Dict[str, Union[str, int, bool]]
+"""Dictionary of query string parametes.
+
+See NSO documentation for meaning of possible parameters:
+
+- commit-queue
+- commit-queue-atomic
+- commit-queue-block-others
+- commit-queue-lock
+- commit-queue-tag
+- commit-queue-timeout
+- commit-queue-error-option
+- depth
+- dry-run
+- dry-run-reverse
+- insert
+- no-networking
+- no-out-of-sync-check
+- no-overwrite
+- no-revision-drop
+- no-deploy
+- no-lsa
+- point
+- rollback-comment
+- rollback-label
+- fields
+- unhide
+- use-lsa
+- with-defaults
+
+"""
+
 JSON = Any

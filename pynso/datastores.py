@@ -13,9 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Datastore type enum
-"""
+"""Datastore type enum."""
 
 from enum import Enum
 
@@ -26,8 +24,28 @@ class DatastoreType(Enum):
     """
     An enum of the resource types in the API.
 
+    By default all calls to NSO operate on the unified data store.
+    If you want only operational or config data one can use NONCONFIG or CONFIG respectively.
+
     """
 
     UNIFIED = "all"
+    """
+    Work on both datastores
+
+    This corrensponds with using the default content=all query parameter or no content query parameter
+    """
+
     CONFIG = "config"
+    """
+    Only work on the config datastore.
+
+    This corrensponds with using the content=config query parameter
+    """
+
     NONCONFIG = "nonconfig"
+    """
+    Only work on the operational datastore.
+
+    This corrensponds with using the content=config query parameter
+    """
