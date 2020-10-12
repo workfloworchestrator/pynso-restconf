@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PyNSO API - Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#enumerations">Enumerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#types">Types</a></li>
 </ul>
 
             
@@ -159,16 +160,21 @@
 <dl class="py class">
 <dt id="pynso.client.NSOClient">
 <em class="property">class </em><code class="sig-prename descclassname">pynso.client.</code><code class="sig-name descname">NSOClient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">host</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">username</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="n">port</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span> <span class="o">=</span> <span class="default_value">8080</span></em>, <em class="sig-param"><span class="n">ssl</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verify_ssl</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">root</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">'restconf'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pynso.client.NSOClient" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p>The main client class for the NSO APIs.</p>
+<dl class="py method">
 <dt id="pynso.client.NSOClient.apply_rollback">
 <code class="sig-name descname">apply_rollback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em>, <em class="sig-param"><span class="n">selective</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.apply_rollback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply a system rollback</p>
+<dd><p>Apply a system rollback.</p>
+<p>After applying a rollback this latest change gets id 0 which means that all other ids also change.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.apply_rollback_by_fixed_number">
 <code class="sig-name descname">apply_rollback_by_fixed_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fixed_number</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em>, <em class="sig-param"><span class="n">selective</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.apply_rollback_by_fixed_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply a system rollback</p>
+<dd><p>Apply a system rollback by fixed number.</p>
+<p>After applying a rollback the fixed number is still the same.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -178,164 +184,208 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
-<li><p><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – The new value at the given path</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if successful, otherwise error.</p>
-</dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.create_data_value">
-<code class="sig-name descname">create_data_value</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], data: Any, *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.create_data_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create (POST) a data entry in a datastore</p>
+<code class="sig-name descname">create_data_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.create_data_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create (POST) a data entry in a datastore.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
-<li><p><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – The new value at the given path</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>data</strong> – The new value at the given path</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if successful, otherwise error.</p>
-</dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on failures.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.delete_path">
-<code class="sig-name descname">delete_path</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.delete_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete a data entry in a datastore</p>
+<code class="sig-name descname">delete_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.delete_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a data entry in a datastore.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if successful, otherwise error.</p>
-</dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on failures.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.exists">
-<code class="sig-name descname">exists</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><a class="headerlink" href="#pynso.client.NSOClient.exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if a data entry in a datastore exists</p>
+<code class="sig-name descname">exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><a class="headerlink" href="#pynso.client.NSOClient.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a data entry in a datastore exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on failures.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.get_data">
-<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.get_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a data entry in a datastore</p>
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a data entry in a datastore.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.get_datastore">
 <code class="sig-name descname">get_datastore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datastore_name</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.get_datastore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the details of a datastore</p>
+<dd><p>Get the details of a datastore.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>datastore_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The target datastore name</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datastore_name</strong> – The target datastore name</p></li>
+<li><p><strong>params</strong> – Extra query parameters, see <code class="xref py py-data docutils literal notranslate"><span class="pre">Params</span></code></p></li>
+</ul>
 </dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.get_rollback">
 <code class="sig-name descname">get_rollback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><a class="headerlink" href="#pynso.client.NSOClient.get_rollback" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a list of stored rollbacks</p>
+<dd><p>Get the contents of stored rollbacks.</p>
+<p>This returns the configuration diff as it was applied in the change by id.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.get_rollback_by_fixed_number">
 <code class="sig-name descname">get_rollback_by_fixed_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fixed_number</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><a class="headerlink" href="#pynso.client.NSOClient.get_rollback_by_fixed_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a list of stored rollbacks</p>
+<dd><p>Get the contents of stored rollbacks by fixed number.</p>
+<p>This returns the configuration diff as it was applied in the change by fixed-number.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.get_rollbacks">
 <code class="sig-name descname">get_rollbacks</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.get_rollbacks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a list of stored rollbacks</p>
+<dd><p>Get a list of stored rollbacks.</p>
+<p>Rollbacks have an id which start at the most recent change and a fixed number which starts at the oldest change.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.info">
 <code class="sig-name descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns API information</p>
+<dd><p>Return API information.</p>
+<p>This call returns the loaded yang modules.</p>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pynso.client.NSOClient.query">
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; Any<a class="headerlink" href="#pynso.client.NSOClient.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the nso query api.</p>
+<p>The API consists of the following Requests:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>start-query: Start a query and return a query handle.</p></li>
+<li><p>fetch-query-result: Use a query handle to repeatedly fetch chunks of the result.</p></li>
+<li><p>immediate-query: Start a query and return the entire result immediately.</p></li>
+<li><p>reset-query: (Re)set where the next fetched result will begin from.</p></li>
+<li><p>stop-query: Stop (and close) the query.</p></li>
+</ul>
+</div></blockquote>
+<p>The API consists of the following Replies:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>start-query-result: Reply to the start-query request</p></li>
+<li><p>query-result: Reply to the fetch-query-result and immediate-query requests</p></li>
+</ul>
+</div></blockquote>
+<dl>
+<dt>Example:</dt><dd><p>Example payload:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;start-query&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;foreach&quot;</span><span class="p">:</span> <span class="s2">&quot;/x/host[enabled = &#39;true&#39;]&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;select&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Host name&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;expression&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;result-type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="nt">&quot;expression&quot;</span><span class="p">:</span> <span class="s2">&quot;address&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;result-type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;sort-by&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="nt">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on request failures or <a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">json.JSONDecodeError</span></code></a> on invalid json.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.set_data_value">
-<code class="sig-name descname">set_data_value</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], data: Any, *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.set_data_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update (PUT) a complete data entry in a datastore</p>
+<code class="sig-name descname">set_data_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.set_data_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update (PUT) a complete data entry in a datastore.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
-<li><p><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – The new value at the given path</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>data</strong> – The new value at the given path</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if successful, otherwise error.</p>
-</dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on failures.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pynso.client.NSOClient.update_data_value">
-<code class="sig-name descname">update_data_value</code><span class="sig-paren">(</span><em class="sig-param">data_path: Iterable[str], data: Any, *, datastore: pynso.datastores.DatastoreType = &lt;DatastoreType.UNIFIED: 'all'&gt;, params: Optional[Dict[str, Union[str, int, bool]]] = None</em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.update_data_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_data_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_path</span><span class="p">:</span> <span class="n">Iterable<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">Any</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">datastore</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span><a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType">pynso.datastores.DatastoreType</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">params</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Union<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><span class="p">]</span><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a><a class="headerlink" href="#pynso.client.NSOClient.update_data_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partial update (PATCH) elements of a data entry in a datastore by only providing the changed items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>datastore</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DatastoreType</span></code>) – The target datastore</p></li>
-<li><p><strong>data_path</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">tuple</span></code>) – The list of paths</p></li>
-<li><p><strong>data</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) – The new value at the given path</p></li>
+<li><p><strong>data_path</strong> – The list of paths segments</p></li>
+<li><p><strong>data</strong> – The new value at the given path</p></li>
+<li><p><strong>datastore</strong> – Optional target datastore, see <a class="reference internal" href="#pynso.datastores.DatastoreType" title="pynso.datastores.DatastoreType"><code class="xref py py-class docutils literal notranslate"><span class="pre">pynso.datastores.DatastoreType</span></code></a></p></li>
+<li><p><strong>params</strong> – Optional Extra query parameters, see <a class="reference internal" href="#pynso.types.Params" title="pynso.types.Params"><code class="xref py py-data docutils literal notranslate"><span class="pre">pynso.types.Params</span></code></a></p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if successful, otherwise error.</p>
-</dd>
 </dl>
+<p>Raises <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.HTTPError</span></code> on failures.</p>
 </dd></dl>
 
 </dd></dl>
@@ -347,8 +397,69 @@
 <dt id="pynso.datastores.DatastoreType">
 <em class="property">class </em><code class="sig-prename descclassname">pynso.datastores.</code><code class="sig-name descname">DatastoreType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pynso.datastores.DatastoreType" title="Permalink to this definition">¶</a></dt>
 <dd><p>An enum of the resource types in the API.</p>
+<p>By default all calls to NSO operate on the unified data store.
+If you want only operational or config data one can use NONCONFIG or CONFIG respectively.</p>
+<dl class="py attribute">
+<dt id="pynso.datastores.DatastoreType.CONFIG">
+<code class="sig-name descname">CONFIG</code><em class="property"> = 'config'</em><a class="headerlink" href="#pynso.datastores.DatastoreType.CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Only work on the config datastore.</p>
+<p>This corrensponds with using the content=config query parameter</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="pynso.datastores.DatastoreType.NONCONFIG">
+<code class="sig-name descname">NONCONFIG</code><em class="property"> = 'nonconfig'</em><a class="headerlink" href="#pynso.datastores.DatastoreType.NONCONFIG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Only work on the operational datastore.</p>
+<p>This corrensponds with using the content=config query parameter</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pynso.datastores.DatastoreType.UNIFIED">
+<code class="sig-name descname">UNIFIED</code><em class="property"> = 'all'</em><a class="headerlink" href="#pynso.datastores.DatastoreType.UNIFIED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Work on both datastores</p>
+<p>This corrensponds with using the default content=all query parameter or no content query parameter</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="types">
+<h1>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><dl class="py data">
+<dt id="pynso.types.Params">
+<code class="sig-prename descclassname">pynso.types.</code><code class="sig-name descname">Params</code><em class="property"> = typing.Dict[str, typing.Union[str, int, bool]]</em><a class="headerlink" href="#pynso.types.Params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of query string parametes.</p>
+<p>See NSO documentation for meaning of possible parameters:</p>
+<ul class="simple">
+<li><p>commit-queue</p></li>
+<li><p>commit-queue-atomic</p></li>
+<li><p>commit-queue-block-others</p></li>
+<li><p>commit-queue-lock</p></li>
+<li><p>commit-queue-tag</p></li>
+<li><p>commit-queue-timeout</p></li>
+<li><p>commit-queue-error-option</p></li>
+<li><p>depth</p></li>
+<li><p>dry-run</p></li>
+<li><p>dry-run-reverse</p></li>
+<li><p>insert</p></li>
+<li><p>no-networking</p></li>
+<li><p>no-out-of-sync-check</p></li>
+<li><p>no-overwrite</p></li>
+<li><p>no-revision-drop</p></li>
+<li><p>no-deploy</p></li>
+<li><p>no-lsa</p></li>
+<li><p>point</p></li>
+<li><p>rollback-comment</p></li>
+<li><p>rollback-label</p></li>
+<li><p>fields</p></li>
+<li><p>unhide</p></li>
+<li><p>use-lsa</p></li>
+<li><p>with-defaults</p></li>
+</ul>
+</dd></dl>
+
+</div></blockquote>
 </div>
 
 
