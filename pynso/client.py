@@ -229,7 +229,9 @@ class NSOClient(object):
 
         self.connection.delete(data_store="data", path=path, params=params)
 
-    def call_operation(self, data_path: Iterable[str], data: JSON, *, params: Optional[Params] = None) -> JSON:
+    def call_operation(
+        self, data_path: Iterable[str], data: JSON, *, params: Optional[Params] = None
+    ) -> Optional[JSON]:
         """
         Call (POST) an operation to a datastore.
 
@@ -243,7 +245,9 @@ class NSOClient(object):
 
         data = self.connection.post(data_store="data", path=path, data=data, params=params)
 
-        return data["tailf-ncs:output"]
+        if data is not None:
+            return data["tailf-ncs:output"]
+        return None
 
     def get_rollbacks(self) -> JSON:
         """

@@ -18,7 +18,7 @@ dependency_links = [x.strip().replace("git+", "") for x in all_reqs if "git+" no
 
 setup(
     name="pynso-restconf",
-    version="2.0.0",
+    version="2.0.1",
     description="A Python client library for Cisco NSO (previously tail-f)",
     long_description=long_description,
     url="https://github.com/workfloworchestrator/pynso-restconf",
