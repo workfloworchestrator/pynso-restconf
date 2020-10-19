@@ -16,12 +16,13 @@
 import os
 import sys
 
+import pynso
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath(".."))
 
-import pynso
 
 # -- General configuration ------------------------------------------------
 
@@ -267,15 +268,7 @@ man_pages = [(master_doc, "pynso", "PyNSO Documentation", [author], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (
-        master_doc,
-        "PyNSO",
-        "PyNSO Documentation",
-        author,
-        "PyNSO",
-        "One line description of project.",
-        "Miscellaneous",
-    ),
+    (master_doc, "PyNSO", "PyNSO Documentation", author, "PyNSO", "One line description of project.", "Miscellaneous",),
 ]
 
 # Documents to append as an appendix to all manuals.

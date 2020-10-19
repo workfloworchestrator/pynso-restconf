@@ -91,11 +91,7 @@ class NSOClient(object):
         return data["ietf-restconf:data"]
 
     def exists(
-        self,
-        data_path: Iterable[str],
-        *,
-        datastore: Optional[DatastoreType] = None,
-        params: Optional[Params] = None,
+        self, data_path: Iterable[str], *, datastore: Optional[DatastoreType] = None, params: Optional[Params] = None,
     ) -> bool:
         """
         Check if a data entry in a datastore exists.
@@ -119,11 +115,7 @@ class NSOClient(object):
                 raise e
 
     def get_data(
-        self,
-        data_path: Iterable[str],
-        *,
-        datastore: Optional[DatastoreType] = None,
-        params: Optional[Params] = None,
+        self, data_path: Iterable[str], *, datastore: Optional[DatastoreType] = None, params: Optional[Params] = None,
     ) -> JSON:
         """
         Get a data entry in a datastore.
@@ -209,11 +201,7 @@ class NSOClient(object):
         self.connection.patch(data_store="data", path=path, data=data, params=params)
 
     def delete_path(
-        self,
-        data_path: Iterable[str],
-        *,
-        datastore: Optional[DatastoreType] = None,
-        params: Optional[Params] = None,
+        self, data_path: Iterable[str], *, datastore: Optional[DatastoreType] = None, params: Optional[Params] = None,
     ) -> None:
         """
         Delete a data entry in a datastore.
