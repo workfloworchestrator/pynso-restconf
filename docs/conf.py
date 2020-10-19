@@ -12,19 +12,16 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-'''
-   isort:skip_file
 
-'''
-import os
-import sys
+import os  # isort:skip
+import sys  # isort:skip
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath(".."))
-import pynso
+import pynso  # isort:skip
 
 
 # -- General configuration ------------------------------------------------
