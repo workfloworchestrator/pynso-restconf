@@ -216,7 +216,8 @@ class TestClient(unittest.TestCase):
 
         self.assertIsNone(data)
         self.mock_connection.post.assert_called_once_with(
-            path="tailf-rollback:rollback-files/apply-rollback-file", data={"input": {"fixed-number": 86}},
+            path="tailf-rollback:rollback-files/apply-rollback-file",
+            data={"input": {"fixed-number": 86}},
         )
 
     def test_apply_rollback_by_fixed_number_options(self):
