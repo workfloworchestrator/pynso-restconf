@@ -1,7 +1,6 @@
 PyNSO-restconf
-=====
-
-|Build| |PyPI1| |PyPI2| |PyPI3| |Documentation Status| |Coverage|
+--------------
+|Build| |PyPI1| |PyPI2| |PyPI3| |Documentation Status|
 
 Overview
 --------
