@@ -1,0 +1,34 @@
+<p><a href="https://github.com/workfloworchestrator/pynso-restconf" rel="nofollow"><img alt="Build" src="https://github.com/workfloworchestrator/pynso-restconf/workflows/Python%20package/badge.svg"></a> <a href="https://pypi.python.org/pypi/pynso-restconf" rel="nofollow"><img alt="PyPI1" src="https://img.shields.io/pypi/v/pynso-restconf.svg?maxAge=2592000"></a> <a href="https://pypi.python.org/pypi/pynso-restconf" rel="nofollow"><img alt="PyPI2" src="https://img.shields.io/pypi/l/pynso-restconf.svg?maxAge=2592000"></a> <a href="https://pypi.python.org/pypi/pynso-restconf" rel="nofollow"><img alt="PyPI3" src="https://img.shields.io/pypi/pyversions/pynso-restconf.svg?maxAge=2592000"></a> <a href="http://pynso-restconf.readthedocs.io/en/latest/?badge=latest" rel="nofollow"><img alt="Documentation Status" src="https://readthedocs.org/projects/pynso-restconf/badge/?version=latest"></a></p>
+<div id="pynso-restconf">
+<h2>PyNSO-Restconf</h2>
+<p>A Python client library for Cisco NSO (previously tail-f)</p>
+</div>
+<div id="installation">
+<h2>Installation</h2>
+<p>To install use pip:</p>
+<pre>$ pip install pynso-restconf
+</pre>
+<p>Or clone the repo:</p>
+<pre>$ git clone https://github.com/workfloworchestrator/pynso-restconf.git
+$ python setup.py install
+</pre>
+</div>
+<div id="usage">
+<h2>Usage</h2>
+<pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">pynso</span> <span class="kn">import</span> <span class="n">NSOClient</span>
+
+<span class="c1"># Setup a client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">NSOClient</span><span class="p">(</span><span class="s1">'10.123.92.12'</span><span class="p">,</span> <span class="s1">'admin'</span><span class="p">,</span> <span class="s1">'admin'</span><span class="p">)</span>
+
+<span class="c1"># Get information about the API</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Getting API version number'</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+
+<span class="c1"># Get the information about the running datastore</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Getting information about the running datastore'</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">get_datastore</span><span class="p">(</span><span class="s2">&quot;running&quot;</span><span class="p">))</span>
+</pre>
+</div>
+

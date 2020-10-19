@@ -1,9 +1,7 @@
-PyNSO-restconf
---------------
 |Build| |PyPI1| |PyPI2| |PyPI3| |Documentation Status|
 
-Overview
---------
+PyNSO-Restconf
+--------------
 
 A Python client library for Cisco NSO (previously tail-f)
 
