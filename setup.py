@@ -21,7 +21,7 @@ with open(path.join(here, "VERSION"), encoding="utf-8") as f:
 
 setup(
     name="pynso-restconf",
-    version="2.0.1",
+    version=version,
     description="A Python client library for Cisco NSO (previously tail-f)",
     long_description=long_description,
     url="http://workfloworchestrator.org/pynso-restconf/",
