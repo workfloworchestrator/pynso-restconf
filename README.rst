@@ -1,10 +1,11 @@
-|Build| |PyPI1| |PyPI2| |PyPI3| |Documentation Status|
-
+==============
 PyNSO-Restconf
---------------
+==============
+|Build| |PyPI1| |PyPI2| |PyPI3|
 
 A Python client library for Cisco NSO (previously tail-f)
 
+------------
 Installation
 ------------
 
@@ -21,6 +22,7 @@ Or clone the repo:
     $ git clone https://github.com/workfloworchestrator/pynso-restconf.git
     $ python setup.py install
 
+-----
 Usage
 -----
 
@@ -42,12 +44,10 @@ Usage
     pprint(client.get_datastore("running"))
 
 .. |Build| image:: https://github.com/workfloworchestrator/pynso-restconf/workflows/Python%20package/badge.svg
-   :target: https://github.com/workfloworchestrator/pynso-restconf
+    :target: https://github.com/workfloworchestrator/pynso-restconf
 .. |PyPI1| image:: https://img.shields.io/pypi/v/pynso-restconf.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso-restconf
+    :target: https://pypi.python.org/pypi/pynso-restconf
 .. |PyPI2| image:: https://img.shields.io/pypi/l/pynso-restconf.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso-restconf
+    :target: https://pypi.python.org/pypi/pynso-restconf
 .. |PyPI3| image:: https://img.shields.io/pypi/pyversions/pynso-restconf.svg?maxAge=2592000
-   :target: https://pypi.python.org/pypi/pynso-restconf
-.. |Documentation Status| image:: https://readthedocs.org/projects/pynso-restconf/badge/?version=latest
-   :target: http://pynso-restconf.readthedocs.io/en/latest/?badge=latest
+    :target: https://pypi.python.org/pypi/pynso-restconf

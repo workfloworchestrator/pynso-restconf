@@ -16,27 +16,30 @@ with open(path.join(here, "requirements.txt"), encoding="utf-8") as f:
 install_requires = [x.strip() for x in all_reqs if "git+" not in x]
 dependency_links = [x.strip().replace("git+", "") for x in all_reqs if "git+" not in x]
 
-with open(path.join(here, "VERSION"), encoding="utf-8") as f:
-    version = f.read()
-
 setup(
     name="pynso-restconf",
-    version=version,
+    version="2.0.1",
     description="A Python client library for Cisco NSO (previously tail-f)",
     long_description=long_description,
-    url="http://workfloworchestrator.org/pynso-restconf/",
-    download_url="https://github.com/workfloworchestrator/pynso-restconf/archive/" + version + ".tar.gz",
+    long_description_content_type="text/x-rst",
+    url="https://github.com/workfloworchestrator/pynso-restconf",
+    # download_url="https://github.com/tonybaloney/DimensionDataCBUSydney/tarball/" + __version__,
     license="APACHE2",
-    keywords=["NSO", "TAIL-f", "CISCO", "YANG", "RESTCONF", "NETCONF", "CLIENT"],
     classifiers=[
+        "License :: OSI Approved :: Apache Software License",
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache2 License",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3",
+        "Intended Audience :: Information Technology",
+        "Intended Audience :: System Administrators",
+        "Operating System :: OS Independent",
+        "Topic :: Internet",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development",
+        "Typing :: Typed",
     ],
+    keywords="",
     packages=find_packages(exclude=["docs", "tests*"]),
     include_package_data=True,
     author="SURF",
