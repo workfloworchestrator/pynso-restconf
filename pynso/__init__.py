@@ -15,7 +15,11 @@
 
 """A Python client library for Cisco NSO (previously tail-f)."""
 
-__version__ = "2.0.2"
+import os
+
+pwd = os.path.join(os.path.dirname(os.path.realpath(__file__)))
+with open(pwd + "/../VERSION", "r") as version:
+    __version__ = version.readline()
 
 
 from .client import NSOClient

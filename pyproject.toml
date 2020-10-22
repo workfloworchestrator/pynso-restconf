@@ -1,3 +1,60 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "pynso"
+dist-name = "pynso-restconf"
+author = "SURF"
+author-email = "automation-helpdesk@surfnet.nl"
+home-page = "https://github.com/workfloworchestrator/pynso-restconf"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Topic :: Internet",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development",
+    "Typing :: Typed"
+]
+description-file = "README.rst"
+requires = [
+    "requests",
+    "bumpversion"
+]
+requires-python = ">=3.6"
+
+[tool.flit.metadata.urls]
+Documentation = "http://workfloworchestrator.org/pynso-restconf/"
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "black",
+    "flake8",
+    "flake8-bandit",
+    "flake8-bugbear",
+    "flake8-comprehensions",
+    "flake8-docstrings",
+    "flake8-logging-format",
+    "flake8-pep3101",
+    "flake8-print",
+    "flake8-rst",
+    "flake8-rst-docstrings",
+    "isort",
+    "mypy",
+    "pytest",
+    "requests-mock"
+]
+all = [
+    "requests",
+    "bumpversion",
+]
+
 [tool.isort]
 profile="black"
 line_length = 120
