@@ -51,5 +51,5 @@ Usage
     :target: https://pypi.python.org/pypi/pynso-restconf
 .. |PyPI3| image:: https://img.shields.io/pypi/pyversions/pynso-restconf.svg?maxAge=2592000
     :target: https://pypi.python.org/pypi/pynso-restconf
-.. |Downloads| image:: https://static.pepy.tech/personalized-badge/pynso-restconf?period=month&units=international_system&left_color=black&right_color=orange&left_text=Downloads
+.. |Downloads| image:: https://static.pepy.tech/personalized-badge/pynso-restconf?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads
     :target: https://pepy.tech/project/pynso-restconf
