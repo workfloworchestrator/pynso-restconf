@@ -18,6 +18,7 @@ To install use pip:
 Or clone the repo:
 
 ::
+
     $ git clone https://github.com/workfloworchestrator/pynso-restconf.git
     $ pip install flit
     $ flit install --deps develop --symlink
