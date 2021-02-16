@@ -48,6 +48,7 @@ test = [
     "isort",
     "mypy==0.790",
     "pytest",
+    "pygments",
     "requests-mock"
 ]
 all = [
