@@ -46,7 +46,7 @@ test = [
     "flake8-rst",
     "flake8-rst-docstrings",
     "isort",
-    "mypy",
+    "mypy==0.790",
     "pytest",
     "requests-mock"
 ]
