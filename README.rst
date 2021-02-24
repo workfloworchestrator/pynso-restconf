@@ -1,7 +1,7 @@
 ==============
 PyNSO-Restconf
 ==============
-|Build| |PyPI1| |PyPI2| |PyPI3| |Downloads|
+|Build| |PyPI1| |PyPI2| |PyPI3| |Downloads| |Coverage|
 
 A Python client library for Cisco NSO (previously tail-f)
 
@@ -54,3 +54,5 @@ Usage
     :target: https://pypi.python.org/pypi/pynso-restconf
 .. |Downloads| image:: https://static.pepy.tech/personalized-badge/pynso-restconf?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads
     :target: https://pepy.tech/project/pynso-restconf
+.. |Coverage| image:: https://codecov.io/gh/workfloworchestrator/pynso-restconf/branch/master/graph/badge.svg?token=46WG8BU0YG
+    :target: https://codecov.io/gh/workfloworchestrator/pynso-restconf
